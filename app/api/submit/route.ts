@@ -1,9 +1,10 @@
 export async function POST(req: Request) {
-  const data = await req.json();
+  console.log("✅ /api/submit triggered");
 
+  const data = await req.json();
   console.log("Form data received:", data);
 
-  // OPTIONAL: Forward to Zapier or n8n webhook
+  // optional webhook
   await fetch("https://webhook.site/YOUR_UNIQUE_URL", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
