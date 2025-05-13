@@ -2,37 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* GLOBAL THEME VARIABLES */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 267 100% 61%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 267 100% 61%;
-    --radius: 0.5rem;
-
-    /* RGB values for dynamic colors */
-    --violet-rgb: 139, 92, 246;
-    --fuchsia-rgb: 217, 70, 239;
-    --amber-rgb: 245, 158, 11;
-    --cyan-rgb: 34, 211, 238;
-  }
-
-  .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -52,33 +24,38 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 267 100% 61%;
-  }
-}
+    --radius: 0.5rem;
 
-@layer base {
+    --violet-rgb: 139, 92, 246;
+    --fuchsia-rgb: 217, 70, 239;
+    --amber-rgb: 245, 158, 11;
+    --cyan-rgb: 34, 211, 238;
+  }
+
+  body {
+    @apply text-foreground;
+    background: radial-gradient(circle at 30% 30%, rgba(24, 24, 27, 1), rgba(9, 9, 11, 1));
+  }
+
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
-/* Scroll Container */
+/* Scroll Snap Layout */
 .scroll-container {
   scroll-behavior: smooth;
   height: 100vh;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
-
 @media (min-width: 768px) {
   .scroll-container {
-    padding-left: 4rem; /* Space for the vertical nav */
+    padding-left: 4rem;
   }
 }
 
-/* Hero Flash Animation */
+/* Launch Flash Animation */
 .flash {
   position: absolute;
   inset: 0;
@@ -86,26 +63,18 @@
   z-index: 50;
   animation: fadeFlash 2.5s ease-in-out forwards;
 }
-
 @keyframes fadeFlash {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-/* Gradient Text */
+/* Text + Border Gradient Utility */
 .gradient-text {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-500 via-fuchsia-500 to-amber-500;
 }
-
-/* Gradient Border */
 .gradient-border {
   position: relative;
 }
-
 .gradient-border::before {
   content: "";
   position: absolute;
@@ -119,36 +88,31 @@
   pointer-events: none;
 }
 
-/* Standardized CTA Button */
+/* CTA Button */
 .gradient-button {
   @apply relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-violet-600 to-amber-500 px-8 py-3 font-bold text-lg text-white transition-all hover:from-violet-500 hover:to-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-black;
   min-height: 48px;
 }
-
 .gradient-button::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: linear-gradient(to right, rgba(139, 92, 246, 0.3), rgba(245, 158, 11, 0.3));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .gradient-button:hover::before {
   opacity: 1;
   transform: scale(1.05);
 }
 
+/* Glow Pulse */
 .pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-
 @keyframes pulse {
-  0%,
-  100% {
+  0%, 100% {
     opacity: 1;
     box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7);
   }
@@ -158,7 +122,7 @@
   }
 }
 
-/* Navigation Tooltip */
+/* Nav Tooltip */
 .nav-tooltip {
   position: absolute;
   left: 100%;
@@ -173,17 +137,20 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
-  transform-origin: left;
   margin-left: 0.5rem;
   z-index: 100;
 }
-
 .nav-item:hover .nav-tooltip {
   opacity: 1;
   transform: translateY(-50%) scale(1);
 }
 
-/* Mobile Responsiveness */
+/* Calendly Embed Cleanup */
+.calendly-inline-widget {
+  background: transparent !important;
+}
+
+/* Responsive Form */
 @media (max-width: 768px) {
   .gradient-button {
     width: 100%;
@@ -191,66 +158,33 @@
     padding-right: 1rem;
     font-size: 0.875rem;
   }
-
   .form-container {
     padding: 1rem;
   }
 }
 
-/* Radial Gradient */
+/* Radial Utility */
 .bg-gradient-radial {
   background-image: radial-gradient(var(--tw-gradient-stops));
 }
 
-/* Process Section Specific Styles */
-.text-violet-400 {
-  color: rgb(167, 139, 250);
-}
-.text-fuchsia-400 {
-  color: rgb(232, 121, 249);
-}
-.text-amber-400 {
-  color: rgb(251, 191, 36);
-}
-.text-cyan-400 {
-  color: rgb(34, 211, 238);
-}
+/* Color Utilities */
+.text-violet-400 { color: rgb(167, 139, 250); }
+.text-fuchsia-400 { color: rgb(232, 121, 249); }
+.text-amber-400 { color: rgb(251, 191, 36); }
+.text-cyan-400 { color: rgb(34, 211, 238); }
 
-.bg-violet-500\/20 {
-  background-color: rgba(139, 92, 246, 0.2);
-}
-.bg-fuchsia-500\/20 {
-  background-color: rgba(217, 70, 239, 0.2);
-}
-.bg-amber-500\/20 {
-  background-color: rgba(245, 158, 11, 0.2);
-}
-.bg-cyan-500\/20 {
-  background-color: rgba(34, 211, 238, 0.2);
-}
+.bg-violet-500\/20 { background-color: rgba(139, 92, 246, 0.2); }
+.bg-fuchsia-500\/20 { background-color: rgba(217, 70, 239, 0.2); }
+.bg-amber-500\/20 { background-color: rgba(245, 158, 11, 0.2); }
+.bg-cyan-500\/20 { background-color: rgba(34, 211, 238, 0.2); }
 
-.border-violet-500 {
-  border-color: rgb(139, 92, 246);
-}
-.border-fuchsia-500 {
-  border-color: rgb(217, 70, 239);
-}
-.border-amber-500 {
-  border-color: rgb(245, 158, 11);
-}
-.border-cyan-500 {
-  border-color: rgb(34, 211, 238);
-}
+.border-violet-500 { border-color: rgb(139, 92, 246); }
+.border-fuchsia-500 { border-color: rgb(217, 70, 239); }
+.border-amber-500 { border-color: rgb(245, 158, 11); }
+.border-cyan-500 { border-color: rgb(34, 211, 238); }
 
-.ring-violet-400 {
-  --tw-ring-color: rgb(167, 139, 250);
-}
-.ring-fuchsia-400 {
-  --tw-ring-color: rgb(232, 121, 249);
-}
-.ring-amber-400 {
-  --tw-ring-color: rgb(251, 191, 36);
-}
-.ring-cyan-400 {
-  --tw-ring-color: rgb(34, 211, 238);
-}
+.ring-violet-400 { --tw-ring-color: rgb(167, 139, 250); }
+.ring-fuchsia-400 { --tw-ring-color: rgb(232, 121, 249); }
+.ring-amber-400 { --tw-ring-color: rgb(251, 191, 36); }
+.ring-cyan-400 { --tw-ring-color: rgb(34, 211, 238); }
